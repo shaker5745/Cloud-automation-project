@@ -7,17 +7,6 @@ Two production-style DevOps projects you can push to GitHub and demo:
 
 ---
 
-## Quick Start
-
-### Create a GitHub repo and push
-```bash
-git init
-git add .
-git commit -m "Initial commit: cloud-automation portfolio"
-git branch -M main
-git remote add origin https://github.com/<YOUR-USER>/<YOUR-REPO>.git
-git push -u origin main
-```
 
 ### Project 1: Multi-Cloud (Terraform)
 - Fill in variables in `multi-cloud-automation/envs/*/terraform.tfvars.example`, copy to `terraform.tfvars`, then:
