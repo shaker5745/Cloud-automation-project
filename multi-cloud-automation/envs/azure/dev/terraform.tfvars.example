@@ -1,0 +1,7 @@
+location            = "eastus"
+resource_group_name = "rg-demo"
+vnet_name           = "vnet-demo"
+address_space       = ["10.20.0.0/16"]
+subnet_prefixes     = ["10.20.1.0/24"]
+cluster_name        = "aks-demo"
+tags = { owner = "shaker", env = "dev" }

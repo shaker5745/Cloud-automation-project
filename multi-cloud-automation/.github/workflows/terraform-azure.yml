@@ -1,0 +1,23 @@
+name: Terraform Azure
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'multi-cloud-automation/**'
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: multi-cloud-automation/envs/azure/dev
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.7.5
+      - name: Terraform fmt
+        run: terraform fmt -check -recursive || true
+      - name: Terraform Init
+        run: terraform init
+      - name: Terraform Plan
+        run: terraform plan -no-color

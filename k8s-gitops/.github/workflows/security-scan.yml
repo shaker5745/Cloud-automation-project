@@ -1,0 +1,19 @@
+name: Security Scan
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'k8s-gitops/app/**'
+jobs:
+  trivy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Trivy on Dockerfile
+        uses: aquasecurity/trivy-action@0.24.0
+        with:
+          scan-type: 'fs'
+          scan-ref: 'k8s-gitops/app'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true

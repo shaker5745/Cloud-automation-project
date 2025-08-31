@@ -1,0 +1,7 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sForbidLatestTag
+metadata:
+  name: forbid-latest-tag
+spec:
+  match:
+    kinds: [{ apiGroups: ["apps"], kinds: ["Deployment"] }]

@@ -1,0 +1,35 @@
+pipeline {
+  agent any
+  environment {
+    TF_IN_AUTOMATION = 'true'
+  }
+  stages {
+    stage('Checkout') { steps { checkout scm } }
+    stage('Terraform Fmt & Validate') {
+      steps {
+        sh 'terraform -version'
+        dir('multi-cloud-automation/envs/aws/dev') {
+          sh 'terraform fmt -check -recursive || true'
+          sh 'terraform init -backend=false'
+          sh 'terraform validate'
+        }
+      }
+    }
+    stage('Plan') {
+      steps {
+        dir('multi-cloud-automation/envs/aws/dev') {
+          sh 'terraform init'
+          sh 'terraform plan -out=tfplan'
+        }
+      }
+    }
+    stage('Approve') { steps { input message: 'Apply changes?', ok: 'Apply' } }
+    stage('Apply') {
+      steps {
+        dir('multi-cloud-automation/envs/aws/dev') {
+          sh 'terraform apply -auto-approve tfplan'
+        }
+      }
+    }
+  }
+}
